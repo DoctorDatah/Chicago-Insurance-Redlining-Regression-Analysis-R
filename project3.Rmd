@@ -1,0 +1,270 @@
+```{r}
+library(faraway)
+library(ggplot2)
+library(lmtest)
+library(MASS)
+library(Amelia)
+```
+<br><h2>Initial Data Analysis</h2><br>
+```{r}
+summary(chicago)
+```
+<br>Income has much bigger numbers then other parameters. It would have greater weight in the regression model. Hence, to avoid this we standardize the data frame. <br>
+<h2>Scaling</h2>
+```{r}
+ch = chicago
+ch$income = ch$income/1000
+summary(ch)
+```
+```{r}
+#boxplot(chicago[,7],main=names(chicago)[7])
+par(mfrow=c(2,3))
+for(i in 1:6) 
+  boxplot(chicago[,i],main=names(chicago)[i]) 
+```
+
+
+br><h2>Checking the liear Structure of the model</h2><br>
+```{r}
+ch= data.frame(ch)
+```
+```{r}
+lmod_full <- lm(involact~., ch) 
+lmod_full$rank
+summary(lmod_full)
+
+```
+```{r}
+termplot(lmod_full, partial.resid = T, terms=1)
+termplot(lmod_full, partial.resid = T, terms=2)
+termplot(lmod_full, partial.resid = T, terms=3)
+termplot(lmod_full, partial.resid = T, terms=4)
+termplot(lmod_full, partial.resid = T, terms=5)
+termplot(lmod_full, partial.resid = T, terms=6)
+
+
+```
+<br>Structure Seems Linear<br>
+<h2>Checking Normality</h2>
+```{r}
+qqnorm(residuals(lmod_full),ylab = "Residuals", main ="")
+qqline(residuals(lmod_full))
+```
+<br> It looks we have fatter tails problem <br>
+Using Shapiro Test for varification.<br>
+```{r}
+#Checking using Shapiro Test
+  shapiro.test(residuals(lmod_full))
+```
+<br>P-value High, Accepting NUll hypotheses. Dist is Normal.<br>
+<h2>Checking Error Variance</h2>
+```{r}
+plot(fitted(lmod_full),residuals(lmod_full))
+abline(h=0)
+```
+<br>Looks constant varrience with few anaomles.<br>
+<h2>Checking Collinearity</h2>
+```{r}
+X = model.matrix(lmod_full)[,-1]
+cor(X)
+```
+```{r}
+vif(X)
+```
+<br>Every Predictor is under 5. we are safe. (volcat has relatively high correlection with other predictors<br>
+Building model without volact<br>
+```{r}
+lmod1_without_volcat = lm(involact ~  race + fire + theft + age + income, ch )
+summary(lmod1_without_volcat)
+```
+<br>Model without volcat performs better.<br>
+<br>Now, Checking this using anova. <br>
+```{r}
+anova(lmod1_without_volcat,lmod_full)
+```
+<br> H0: Beta(r) = 0 <br>
+    H1: Beta(r) != 0<br>
+  <br>
+    High p-value accept Null Hyptoses. <br>
+simpl words: volcat is not significat. <br>
+<br>Cheking Summry of the model<br>
+```{r}
+summary(lmod1_without_volcat)
+```
+<br>P-value of income is high. means it insignoficant.<br>
+<br>Lets try removing income.<br>
+```{r}
+lmod2_without_volcat_income = lm(involact ~ race + fire + theft + age, ch)
+summary(lmod2_without_volcat_income)
+```
+<br>Removing it does not make much of the difference<br>
+<br>Comparing 2 model using anova<br>
+```{r}
+anova(lmod2_without_volcat_income,lmod1_without_volcat)
+```
+
+<br> H0: Beta(r) = 0 <br>
+    H1: Beta(r) != 0<br>
+  <br>
+ <br> Significane level = 5% <br>
+    High p-value accept Null Hyptoses. <br>
+simple words: income is not significat. <br>
+
+<h2>Checking Unusual Observations</h2> 
+<br><h3>Checking Leverage Points</h3>
+```{r}
+zips = row.names(ch)
+hat_vals = hatvalues(lmod2_without_volcat_income)
+halfnorm(hat_vals,labs = zips, ylab = "Leverages")
+```
+<br>Zip Code: 60607 seems to be high leverage points.<br>
+<br>Cheking these observations<br>
+```{r}
+row1 = which(rownames(ch) == 60607)
+ch[row1,] 
+```
+<br>We can observe high theft in this observations<br>
+<br>See what's happens if we remove this overvations.<br>
+```{r}
+lmod3_modified_1 = lm(involact ~ race + fire + theft + age ,ch[-row1])
+summary(lmod3_modified_1)
+
+```
+<br>No Effect. It might be a case where acutally high theft happend. As it is not effecting the model let it be in the model but report the case. <br>
+<br>Further Investrigation (Checking through orignoal non standerdized data source)<br>
+```{r}
+theft = 3
+boxplot(ch[,theft],main=names(ch)[theft])
+```
+<br> This observation theft value is far higer then other observation. it must be reported.
+
+<h2>Checking Outliers</h2>
+```{r}
+sort(abs(residuals(lmod2_without_volcat_income)))
+
+```
+<br>Following are the outlier observatinons<br>
+      60653       60613       60621       60610 <br>
+0.990274659 1.127907196 1.288022823 1.374325778 <br>
+<br>Now Lets Try by remoing them<br>
+```{r}
+#Getting Outlier Rows
+rn = rownames(ch)
+rows_outliers = subset(ch, rn == 60610 | rn == 60621 | rn == 60613 | rn == 60653)
+rows_outliers
+#buliding model with out them
+lmod2_without_volcat_income_outlier_removed = lm(involact ~ race + fire + theft + age, data = ch[-c(60653,60613,60621,60610),])
+summary(lmod2_without_volcat_income)
+summary(lmod2_without_volcat_income_outlier_removed)
+```
+<br>Does not make any differnce in the result. we let them in the model.<br>
+<h2>Checking Influencial Observations</h2>
+```{r}
+cd = cooks.distance(lmod2_without_volcat_income)
+plot(cd)
+abline(h=0.5)
+```
+<br>2nd method<br>
+```{r}
+plot(lmod2_without_volcat_income)
+```
+<br> No point is Over 0.5.<br>
+No Influenctial Observations <br>
+<h2>Applying Transformations</h2>
+```{r}
+# Repnose do not have strictily positive number
+unique(ch$involact)
+which(ch$involact == 0.0)
+
+#scale respose by adding 0.1
+ch2 = ch
+ch2$involact =  ch$involact + (10^-100)
+
+#creating new model with scaled respose
+lmod4_without_volcat_income_resposeScaledPositive = lm(involact ~ race + fire + theft + age, ch2)
+
+summary(lmod2_without_volcat_income)$r.squared
+summary(lmod4_without_volcat_income_resposeScaledPositive)$r.squared
+#doesnt not makes much of the difference
+
+
+
+#Ploting boxcox
+bc = boxcox(lmod4_without_volcat_income_resposeScaledPositive, plotit=T)
+
+
+```
+<br>Unable to interper the diagram.<br>
+
+<br>Let's try the trasform if the model works better then fine else revert back.<br>
+
+```{r}
+bc$x[which.max(bc$y)]
+```
+<br>Best posible Power tranforation is ^0.222<br>
+Applying Transforamtion.<br>
+```{r}
+lmod5_without_volcat_income_resposeScaledPositive_powerT = lm(involact^0.0202 ~ race + fire + theft + age, ch2)
+summary(lmod4_without_volcat_income_resposeScaledPositive)
+summary(lmod5_without_volcat_income_resposeScaledPositive_powerT)
+```
+<br> Before Trasnforamrion R2 0.7472<br>
+ After Transformation R2 0.6134<br>
+ works better without Transformation. #contine_model2<br>
+
+
+
+<h3>Checking Polynomials</h3>
+Lets try polynomial on theft<br>
+```{r}
+#PRevoius model
+summary(lmod2_without_volcat_income)$r.squared
+summary(lmod2_without_volcat_income)$adj.r.squared
+
+#model with poly 2 
+lmod7_without_volcat_income_poly2 = lm(involact ~ race + fire + poly(theft,2) + age, ch2)
+summary(lmod7_without_volcat_income_poly2)$r.squared
+summary(lmod7_without_volcat_income_poly2)$adj.r.squared
+#model with poly 3
+lmod8_without_volcat_income_poly3 = lm(involact ~ race + fire + poly(theft,3) + age, ch2)
+summary(lmod8_without_volcat_income_poly3)$r.squared
+summary(lmod8_without_volcat_income_poly3)$adj.r.squared
+#model with poly 4
+lmod9_without_volcat_income_poly4 = lm(involact ~ race + fire + poly(theft,4) + age, ch2)
+summary(lmod9_without_volcat_income_poly4)$r.squared
+summary(lmod9_without_volcat_income_poly4)$adj.r.squared
+
+```
+<br> 3th polinolmial of theft makes actually model better #continu_with_model8 <br>
+<br>
+<h2>Evaluating the model</h2>
+```{r}
+##Test_data
+#Selecting Few random rows from data 
+test_data = ch2[sample(nrow(ch2), 5), ]
+options(scipen = 999) #disabling Scintific notation
+round(test_data,2)
+```
+
+```{r}
+##Train_data
+rows= as.numeric(row.names(test_data))
+train_data = ch2[-rows,]
+head(round(train_data,2))
+```
+<br>Evaluating<br>
+```{r}
+#Training the model
+lmod_final = lm(involact ~ race + fire + poly(theft,3) + age, data = train_data)
+summary(lmod_final)
+
+```
+```{r}
+#Testing the model
+test_data_with_removed_varibles = test_data[,-c(5,6,7)] 
+predict(lmod_final,test_data_with_removed_varibles )
+round(test_data,2)
+
+```
+
+

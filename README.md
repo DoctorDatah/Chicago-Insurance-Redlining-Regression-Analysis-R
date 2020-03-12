@@ -102,17 +102,23 @@ I build the model with and without these points and they actually does not effec
 ![theft boxplot](images/theft.jpg)
 This observation theft value is far higher than other observation. it must reported or investigated more thoroughly.
 
-### Checking Outliers
+### Outliers
 Following are the outlier observations
 
-60653	+ 0.990274659 <br>
-60613	1.127907196 <br>
-60621 	1.288022823 <br>
-60610   1.374325778 <br>
+**zips**  | **residuals** <br>
+60653 | 0.990274659 <br>
+60613 | 1.127907196 <br>
+60621 |	1.288022823 <br>
+60610 | 1.374325778 <br>
 
-I build the model with and without the 
+I build the model with and without these outlier, and found that model performance do not get influenced by these outliers. 
 
+### Influential Observations
+plotted cooks-distance diagram and found that no point is Over 0.5 the cook's boundary. hence we have no influential observations.
 
+![cooks-distance](images/cooksdistance.jpg)
+
+## Transformations ##
 
 -----------------
 

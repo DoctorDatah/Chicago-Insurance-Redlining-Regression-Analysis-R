@@ -75,7 +75,7 @@ Every Predictor is under 5. We can proceed. However, *volact* has relatively hig
 <img src="images/vif.jpg" width="60%">
 
 
-**Base Model:**<br>
+**Full Model:**<br>
 Residual standard error: 0.3387 on 40 degrees of freedom<br>
 Multiple R-squared:  0.7517, Adjusted R-squared:  0.7144<br>
 F-statistic: 20.18 on 6 and 40 DF,  p-value: 1.072e-10<br>
@@ -125,7 +125,7 @@ I build the model with and without these outlier, and found that model performan
 ### Influential Observations
 plotted cooks-distance diagram and found that no point is Over 0.5 the cook's boundary. hence we have no influential observations.
 
-<img src="images/cooksdistance.jpg" width="60%">.
+<img src="images/cooksDistance.jpg" width="60%">.
 
 
 ## Transformations
@@ -140,6 +140,6 @@ involact    ~     0.008104  x race
 
 ## Conclusion
 
-We can concluded racial composition, fire, theft and age of housing drives the insurance redlining. However, the family income was not a significant contributor. Taking these factor into account policy makers can make sure to make better polices and laws to outlaw redlining especially the racial composition factor. Resulting, providing equal opportunities for every USA national.  
+We can conclude that racial composition, fire, theft and age of housing drives the redlining. However, the family income was not a significant contributor. Taking these factor into account policy makers can make sure to make better polices and laws to outlaw redlining especially the racial composition factor. Resulting, providing equal opportunities for every USA national.  
 
-Furthermore, we question that  is a *involact* is true representative of redlining or we can come with better measure? How redlining have changed over the period of time? How these analysis can be used for better policy making. 
+Furthermore, we can question that  is the *involact*  a true representative of redlining or we can come up with a better measure? How redlining have changed over the period of time? How these analysis can be used for better policy making?

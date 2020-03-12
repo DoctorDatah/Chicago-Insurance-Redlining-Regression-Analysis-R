@@ -60,17 +60,58 @@ qqnorm gives fatter tails distribution.
 
 **Shapiro-Wilk normality test:** gives **p-value = 0.6317**. High p-value  favors the null hypotheses that the distribution is normal. 
 
-## Error Variance ##
-![Variance](images/errorvarience.jpg)
-Looks constant variance with few anomalies.
+### Error Variance 
+It Looks that model have constant variance with few anomalies.
+![Variance](images/ErrorVarience.jpg)
 
-## Multi-Colinearity ##
+
+### Multi-Colinearity:
 Variance Inflation factors:
 Every Predictor is under 5. We can proceed. However, *volact* has relatively high correlation with other predictors
-
-Building model without volact:
-
 ![VIF](images/vif.jpg)
+
+**Base Model:**<br>
+Residual standard error: 0.3387 on 40 degrees of freedom<br>
+Multiple R-squared:  0.7517, Adjusted R-squared:  0.7144<br>
+F-statistic: 20.18 on 6 and 40 DF,  p-value: 1.072e-10<br>
+
+
+**Model without *volact*:**
+Residual standard error: 0.3351 on 41 degrees of freedom<br>
+Multiple R-squared:  0.7508, Adjusted R-squared:  0.7204<br>
+F-statistic: 24.71 on 5 and 41 DF,  p-value: 2.159e-11<br>
+
+Comparing R-squared model without *volcat* performs better. Same result can be observed when comparing both hypotheses using **anova**. 
+
+**Model without *income*:** As income have high p-value, we tested removing it from the model.
+<br> Residual standard error: 0.3335 on 42 degrees of freedom
+<br> Multiple R-squared:  0.7472, Adjusted R-squared:  0.7231
+<br> F-statistic: 31.03 on 4 and 42 DF,  p-value: 4.799e-12
+
+Removing income does not make much of the difference in model performance as there is very less change in R-squared.
+
+
+## Unusual Observations ##
+### Leverage Points:
+Few leverage points can be observed via *halfnorm plot*.
+![Half-norm](images/halfnorm.jpg)
+
+I build the model with and without these points and they actually does not effect the model performance. 
+
+**Further Investigation:**
+![theft boxplot](images/theft.jpg)
+This observation theft value is far higher than other observation. it must reported or investigated more thoroughly.
+
+### Checking Outliers
+Following are the outlier observations
+
+60653	+ 0.990274659 <br>
+60613	1.127907196 <br>
+60621 	1.288022823 <br>
+60610   1.374325778 <br>
+
+I build the model with and without the 
+
 
 
 -----------------

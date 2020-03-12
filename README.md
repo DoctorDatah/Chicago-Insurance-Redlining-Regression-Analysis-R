@@ -14,11 +14,10 @@ The maps were used by both public and private banks and loan offices to directly
 
 The Fair Housing Act of 1968 made discrimination during the process of selling a house illegal, yet redlining was not effectively outlawed until 1977. The Home Mortgage Disclosure Act of 1975 required transparency thus making redlining unfeasible, and was followed by the Community Reinvestment Act of 1977 that finally prohibited it
 
-<p align="justify">
 <img src="images/redlining.png" width="80%">
-<br>
-A red lined map of Oakland, California, created by Home Owner’s Loan Corporation.
-</p>
+
+  *A red lined map of Oakland, California, created by Home Owner’s Loan Corporation.*
+
 ## Data Source 
 
 In a study of insurance availability in Chicago, the U.S. Commission on Civil Rights attempted to examine charges by several community organizations that insurance companies were redlining their neighborhoods, i.e. canceling policies or refusing to insure or renew.
@@ -31,7 +30,7 @@ Finally, the US Bureau of the census supplied data on racial composition, income
 
 Source: [(here)](https://rdrr.io/cran/faraway/man/chredlin.html).
 
-## Features 
+## Features #
 
 - **race racial:** composition in percent minority
 - **fire:** ﬁres per 100 housing units
@@ -41,43 +40,40 @@ Source: [(here)](https://rdrr.io/cran/faraway/man/chredlin.html).
 - **involact:** new FAIR plan policies and renewals per 100 housing units
 - **income:** median family income
 
-## Goal 
+## Goal #
 To compute the effect of different parameters on insurance redlining in 1975, in which race has been a dominant contributor. To Creating a Linear model for the involuntary market activity variable (the number getting FAIR plan insurance) based on the other parameters. Hence, we can compare the parameters who effects the redlining most in the past vs the one’s which are affecting it now. This regression analysis will give a comparison matric to the policy maker to measure the changes of insurance redlining now and then.  
 
 
 ## Exploratory Data Analysis #
 Boxplots show some unusual observations, that we are later going to deal with.
-----------
+
 <img src="images/boxplot1.png" width="85%">
-</center>
+
 
 ## Linear Model Assumptions ##
 ### Linearity Check
 On full model (model with all predictors) I found that all predictors posses linear relationship with response.
-<p align="justify">
-![linearity](images/linearity.jpg)
-</center>
 
+![linearity](images/linearity.jpg)
 ### Normality of Errors 
 qqnorm gives fatter tails distribution.
-<p align="justify">
+
 <img src="images/qqnorm.jpg" width="60%">
-</center>
 
 **Shapiro-Wilk normality test:** gives **p-value = 0.6317**. High p-value  favors the null hypotheses that the distribution is normal. 
 
 ### Error Variance 
 It Looks that model have constant variance with few anomalies.
-<p align="justify">
-<img src="images/ErrorVarience.jpg" width="60%">
-</center>
 
-### Multi-Colinearity:
+<img src="images/ErrorVarience.jpg" width="60%">
+
+
+### Multi-Colinearity
 Variance Inflation factors:
 Every Predictor is under 5. We can proceed. However, *volact* has relatively high correlation with other predictors.
-<p align="justify">
+
 <img src="images/vif.jpg" width="60%">
-</center>
+
 
 **Base Model:**<br>
 Residual standard error: 0.3387 on 40 degrees of freedom<br>
@@ -102,17 +98,17 @@ Removing income does not make much of the difference in model performance as the
 
 
 ## Unusual Observations ##
-### Leverage Points:
+### Leverage Points
 Few leverage points can be observed via *halfnorm plot*.
-<p align="justify">
+
 <img src="images/halfnorm.jpg" width="60%">
-</center>
+
 I build the model with and without these points and they actually does not effect the model performance. 
 
 **Further Investigation:**
-<p align="justify">
+
 <img src="images/theft.jpg" width="60%">.
-</center>
+
 This observation theft value is far higher than other observation. it must reported or investigated more thoroughly.
 
 ### Outliers
@@ -128,28 +124,22 @@ I build the model with and without these outlier, and found that model performan
 
 ### Influential Observations
 plotted cooks-distance diagram and found that no point is Over 0.5 the cook's boundary. hence we have no influential observations.
-<p align="justify">
+
 <img src="images/cooksdistance.jpg" width="60%">.
-</center>
-
-## Transformations ##
-
------------------
 
 
-**Brief Description:**
--	Performed regression analysis using (R, ANOVA) for insurance redlining on various neighborhoods of Chicago from 1977 to 1978 based on insurance policies, police departments, and census data.
--	Results can be used as a comparison matrix for the factors affecting redlining (like racial composition), for further analysis of the latest years data.
+## Transformations
 
+Transformed *theft* to various polynomial degrees and also tried power transformations. It turned out that non of them improves the model performance.
 
-**Content:**
+### Final Model
+involact    ~     0.008104  x race 
+		+ 0.039080 x fire 
+		+ (-0.009592 ) x theft
+		+ 0.007210 x  age
 
-- R notebook of project (.rmd)
-- HTML format notebook
-- Report: https://www.slideshare.net/MalikHassanQayyum/chicago-insurance-redlining-report
-- Presentation: https://www.slideshare.net/MalikHassanQayyum/chicago-insurance-redlining-presentation
+## Conclusion
 
-### Course 
-**BOOK:** Linear Models with R (Chapman & Hall/CRC Texts in Statistical Science) 2nd Edition<br>
-**Professor:** Dr. Ellie Small<br>
-<br>
+We can concluded racial composition, fire, theft and age of housing drives the insurance redlining. However, the family income was not a significant contributor. Taking these factor into account policy makers can make sure to make better polices and laws to outlaw redlining especially the racial composition factor. Resulting, making equal opportunities for every national.  
+
+Futhermore, we question that  is a *involact* is true representative of redlining or we can come with better measure? How redlining have changed over the period of time? How these analysis can be used for better policy making. 

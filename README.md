@@ -56,20 +56,23 @@ On full model (model with all predictors) I found that all predictors posses lin
 ![linearity](images/linearity.jpg)
 ### Normality of Errors 
 qqnorm gives fatter tails distribution.
-![Normality](images/qqnorm.jpg)
+
+<img src="images/qqnorm.jpg" width="60%">
 
 **Shapiro-Wilk normality test:** gives **p-value = 0.6317**. High p-value  favors the null hypotheses that the distribution is normal. 
 
 ### Error Variance 
 It Looks that model have constant variance with few anomalies.
-![Variance](images/ErrorVarience.jpg)
+
+<img src="images/ErrorVarience.jpg" width="60%">
 
 
 ### Multi-Colinearity:
 Variance Inflation factors:
 Every Predictor is under 5. We can proceed. However, *volact* has relatively high correlation with other predictors.
 
-![VIF](images/vif.jpg)
+<img src="images/vif.jpg" width="60%">
+
 
 **Base Model:**<br>
 Residual standard error: 0.3387 on 40 degrees of freedom<br>
@@ -96,13 +99,15 @@ Removing income does not make much of the difference in model performance as the
 ## Unusual Observations ##
 ### Leverage Points:
 Few leverage points can be observed via *halfnorm plot*.
-![Half-norm](images/halfnorm.jpg)
+
+<img src="images/halfnorm.jpg" width="60%">
 
 I build the model with and without these points and they actually does not effect the model performance. 
 
 **Further Investigation:**
-![theft boxplot](images/theft.jpg)<!-- .element height="10%" width="10%" ->
-![theft boxplot](images/theft.jpg){:height="50%" width="50%"}
+
+<img src="images/theft.jpg" width="60%">.
+
 This observation theft value is far higher than other observation. it must reported or investigated more thoroughly.
 
 ### Outliers
@@ -119,7 +124,8 @@ I build the model with and without these outlier, and found that model performan
 ### Influential Observations
 plotted cooks-distance diagram and found that no point is Over 0.5 the cook's boundary. hence we have no influential observations.
 
-![cooks-distance](images/cooksdistance.jpg)
+<img src="images/cooksdistance.jpg" width="60%">.
+
 
 ## Transformations ##
 

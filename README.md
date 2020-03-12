@@ -41,7 +41,7 @@ Source: [(here)](https://rdrr.io/cran/faraway/man/chredlin.html).
 - **income:** median family income
 
 ## Goal #
-To compute the effect of different parameters on insurance redlining in 1975, in which race has been a dominant contributor. To Creating a Linear model for the involuntary market activity variable (the number getting FAIR plan insurance) based on the other parameters. Hence, we can compare the parameters who effects the redlining most in the past vs the one’s which are affecting it now. This regression analysis will give a comparison matric to the policy maker to measure the changes of insurance redlining now and then.  
+To compute the effect of different parameters on insurance redlining in 1975, in which race has been a dominant contributor. To creating a linear model for the involuntary market activity variable (the number getting FAIR plan insurance) based on the given parameters. Hence, we can compare the parameters who effects the redlining most in the past vs the one’s which are affecting it now. This regression analysis will give a comparison matrix to the policy maker to measure the changes of insurance redlining now and then. As a result, making better polices and providing equal opportunities for every USA national. 
 
 
 ## Exploratory Data Analysis #
@@ -140,6 +140,6 @@ involact    ~     0.008104  x race
 
 ## Conclusion
 
-We can concluded racial composition, fire, theft and age of housing drives the insurance redlining. However, the family income was not a significant contributor. Taking these factor into account policy makers can make sure to make better polices and laws to outlaw redlining especially the racial composition factor. Resulting, making equal opportunities for every national.  
+We can concluded racial composition, fire, theft and age of housing drives the insurance redlining. However, the family income was not a significant contributor. Taking these factor into account policy makers can make sure to make better polices and laws to outlaw redlining especially the racial composition factor. Resulting, providing equal opportunities for every USA national.  
 
-Futhermore, we question that  is a *involact* is true representative of redlining or we can come with better measure? How redlining have changed over the period of time? How these analysis can be used for better policy making. 
+Furthermore, we question that  is a *involact* is true representative of redlining or we can come with better measure? How redlining have changed over the period of time? How these analysis can be used for better policy making. 

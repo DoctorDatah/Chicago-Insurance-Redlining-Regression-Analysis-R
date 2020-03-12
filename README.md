@@ -14,12 +14,12 @@ The maps were used by both public and private banks and loan offices to directly
 
 The Fair Housing Act of 1968 made discrimination during the process of selling a house illegal, yet redlining was not effectively outlawed until 1977. The Home Mortgage Disclosure Act of 1975 required transparency thus making redlining unfeasible, and was followed by the Community Reinvestment Act of 1977 that finally prohibited it
 
-<center>
+<p align="justify">
 <img src="images/redlining.png" width="80%">
-
-*A red lined map of Oakland, California, created by Home Owner’s Loan Corporation.*
-</center>
-## Data Source #
+<br>
+A red lined map of Oakland, California, created by Home Owner’s Loan Corporation.
+</p>
+## Data Source 
 
 In a study of insurance availability in Chicago, the U.S. Commission on Civil Rights attempted to examine charges by several community organizations that insurance companies were redlining their neighborhoods, i.e. canceling policies or refusing to insure or renew.
 
@@ -31,7 +31,7 @@ Finally, the US Bureau of the census supplied data on racial composition, income
 
 Source: [(here)](https://rdrr.io/cran/faraway/man/chredlin.html).
 
-## Features #
+## Features 
 
 - **race racial:** composition in percent minority
 - **fire:** ﬁres per 100 housing units
@@ -41,25 +41,26 @@ Source: [(here)](https://rdrr.io/cran/faraway/man/chredlin.html).
 - **involact:** new FAIR plan policies and renewals per 100 housing units
 - **income:** median family income
 
-## Goal #
+## Goal 
 To compute the effect of different parameters on insurance redlining in 1975, in which race has been a dominant contributor. To Creating a Linear model for the involuntary market activity variable (the number getting FAIR plan insurance) based on the other parameters. Hence, we can compare the parameters who effects the redlining most in the past vs the one’s which are affecting it now. This regression analysis will give a comparison matric to the policy maker to measure the changes of insurance redlining now and then.  
 
 
 ## Exploratory Data Analysis #
 Boxplots show some unusual observations, that we are later going to deal with.
-<center>
+----------
 <img src="images/boxplot1.png" width="85%">
 </center>
 
 ## Linear Model Assumptions ##
 ### Linearity Check
 On full model (model with all predictors) I found that all predictors posses linear relationship with response.
-<center>
+<p align="justify">
 ![linearity](images/linearity.jpg)
 </center>
+
 ### Normality of Errors 
 qqnorm gives fatter tails distribution.
-<center>
+<p align="justify">
 <img src="images/qqnorm.jpg" width="60%">
 </center>
 
@@ -67,14 +68,14 @@ qqnorm gives fatter tails distribution.
 
 ### Error Variance 
 It Looks that model have constant variance with few anomalies.
-<center>
+<p align="justify">
 <img src="images/ErrorVarience.jpg" width="60%">
 </center>
 
 ### Multi-Colinearity:
 Variance Inflation factors:
 Every Predictor is under 5. We can proceed. However, *volact* has relatively high correlation with other predictors.
-<center>
+<p align="justify">
 <img src="images/vif.jpg" width="60%">
 </center>
 
@@ -103,13 +104,13 @@ Removing income does not make much of the difference in model performance as the
 ## Unusual Observations ##
 ### Leverage Points:
 Few leverage points can be observed via *halfnorm plot*.
-<center>
+<p align="justify">
 <img src="images/halfnorm.jpg" width="60%">
 </center>
 I build the model with and without these points and they actually does not effect the model performance. 
 
 **Further Investigation:**
-<center>
+<p align="justify">
 <img src="images/theft.jpg" width="60%">.
 </center>
 This observation theft value is far higher than other observation. it must reported or investigated more thoroughly.
@@ -127,7 +128,7 @@ I build the model with and without these outlier, and found that model performan
 
 ### Influential Observations
 plotted cooks-distance diagram and found that no point is Over 0.5 the cook's boundary. hence we have no influential observations.
-<center>
+<p align="justify">
 <img src="images/cooksdistance.jpg" width="60%">.
 </center>
 

@@ -67,7 +67,8 @@ It Looks that model have constant variance with few anomalies.
 
 ### Multi-Colinearity:
 Variance Inflation factors:
-Every Predictor is under 5. We can proceed. However, *volact* has relatively high correlation with other predictors
+Every Predictor is under 5. We can proceed. However, *volact* has relatively high correlation with other predictors.
+
 ![VIF](images/vif.jpg)
 
 **Base Model:**<br>
@@ -76,14 +77,15 @@ Multiple R-squared:  0.7517, Adjusted R-squared:  0.7144<br>
 F-statistic: 20.18 on 6 and 40 DF,  p-value: 1.072e-10<br>
 
 
-**Model without *volact*:**
+**Model without *volact*:**<br>
 Residual standard error: 0.3351 on 41 degrees of freedom<br>
 Multiple R-squared:  0.7508, Adjusted R-squared:  0.7204<br>
 F-statistic: 24.71 on 5 and 41 DF,  p-value: 2.159e-11<br>
 
 Comparing R-squared model without *volcat* performs better. Same result can be observed when comparing both hypotheses using **anova**. 
 
-**Model without *income*:** As income have high p-value, we tested removing it from the model.
+**Model without *income*:**<br>
+As income have high p-value, I tested removing it from the model.
 <br> Residual standard error: 0.3335 on 42 degrees of freedom
 <br> Multiple R-squared:  0.7472, Adjusted R-squared:  0.7231
 <br> F-statistic: 31.03 on 4 and 42 DF,  p-value: 4.799e-12
@@ -99,7 +101,8 @@ Few leverage points can be observed via *halfnorm plot*.
 I build the model with and without these points and they actually does not effect the model performance. 
 
 **Further Investigation:**
-![theft boxplot](images/theft.jpg)
+![theft boxplot](images/theft.jpg)<!-- .element height="10%" width="10%" ->
+![theft boxplot](images/theft.jpg){:height="50%" width="50%"}
 This observation theft value is far higher than other observation. it must reported or investigated more thoroughly.
 
 ### Outliers

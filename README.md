@@ -1,6 +1,6 @@
 # Chicago Insurance Redlining (Regression Analysis) 
 
-![Kept Out](images\redlining-lead.jpg)
+![Kept Out](images/redlining-lead.jpg)
 
 ## Are people of color more likely to be turned down for a mortgage in Chicago than their white counterparts, even when they make the same amount of money?
 
@@ -14,7 +14,7 @@ The maps were used by both public and private banks and loan offices to directly
 
 The Fair Housing Act of 1968 made discrimination during the process of selling a house illegal, yet redlining was not effectively outlawed until 1977. The Home Mortgage Disclosure Act of 1975 required transparency thus making redlining unfeasible, and was followed by the Community Reinvestment Act of 1977 that finally prohibited it
 
-![Redlining](images\redlining.png)
+![Redlining](images/redlining.png)
 
 *A red lined map of Oakland, California, created by Home Owner’s Loan Corporation.*
 
@@ -46,27 +46,31 @@ To compute the effect of different parameters on insurance redlining in 1975, in
 
 ## Exploratory Data Analysis #
 Boxplots show some unusual observations, that we are later going to deal with.
-![Outliers](images\boxplot1.png)
+![Outliers](images/boxplot1.png)
 
 
 ## Linear Model Assumptions ##
 ### Linearity Check
 On full model (model with all predictors) I found that all predictors posses linear relationship with response.
 
-![linearity](images\linearity.jpg)
+![linearity](images/linearity.jpg)
 ### Normality of Errors 
 qqnorm gives fatter tails distribution.
-![Normality](images\qqnorm.jpg)
+![Normality](images/qqnorm.jpg)
 
 **Shapiro-Wilk normality test:** gives **p-value = 0.6317**. High p-value  favors the null hypotheses that the distribution is normal. 
 
 ## Error Variance ##
-![Variance](images\errorvarience.jpg)
+![Variance](images/errorvarience.jpg)
 Looks constant variance with few anomalies.
 
 ## Multi-Colinearity ##
 Variance Inflation factors:
-![VIF](images\vif.jpg)
+Every Predictor is under 5. We can proceed. However, *volact* has relatively high correlation with other predictors
+
+Building model without volact:
+
+![VIF](images/vif.jpg)
 
 
 -----------------
